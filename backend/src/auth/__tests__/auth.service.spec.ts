@@ -67,7 +67,7 @@ describe('AuthService', () => {
           email: 'test@example.com',
           password: 'password123',
           name: 'Test User',
-        }),
+        })
       ).rejects.toThrow(ConflictException);
     });
   });
@@ -97,7 +97,7 @@ describe('AuthService', () => {
         authService.login({
           email: 'nonexistent@example.com',
           password: 'password123',
-        }),
+        })
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -112,7 +112,7 @@ describe('AuthService', () => {
         authService.login({
           email: 'test@example.com',
           password: 'wrongpassword',
-        }),
+        })
       ).rejects.toThrow(UnauthorizedException);
     });
   });

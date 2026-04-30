@@ -23,11 +23,19 @@ reloj-laboral/
 │       └── schema.prisma
 ├── frontend/            # React + Vite + Tailwind (port 5173)
 │   ├── src/
-│   │   ├── components/  # Layout, etc.
+│   │   ├── components/
+│   │   │   ├── Sidebar.tsx       # Navigation sidebar
+│   │   │   ├── Layout.tsx        # Main layout
+│   │   │   └── ui/               # UI components
+│   │   │       ├── Button.tsx    # Reusable button
+│   │   │       ├── Input.tsx     # Form input
+│   │   │       ├── Card.tsx      # Card component
+│   │   │       ├── Skeleton.tsx  # Loading skeletons
+│   │   │       └── Toast.tsx     # Notifications
 │   │   ├── pages/       # Login, Register, Dashboard, Clocking, Users, Companies, Projects, Vacations
-│   │   ├── hooks/      # useAuth, useGeolocation
-│   │   ├── services/   # API client
-│   │   └── types/     # TypeScript interfaces
+│   │   ├── hooks/       # useAuth, useGeolocation
+│   │   ├── services/    # API client
+│   │   └── types/       # TypeScript interfaces
 ├── python/            # Report scripts (Excel/PDF)
 └── docker-compose.yml
 ```
@@ -109,6 +117,8 @@ docker-compose up -d
 - **Geolocalización**: Captura GPS al registrar entrada/salida (HTML5 Geolocation API)
 - **Validación de Horarios**: Compara fichajes vs horarios de la empresa (EARLY, ON_TIME, LATE, OUTSIDE)
 - **Vacaciones**: Solicitudes de permiso (vacaciones, baja médica, asunto personal), aprobación por administrador
+- **Landing Page**: Página principal profesional con pricing, features y testimonios
+- **UI/UX Moderno**: Diseño estilo Sesame HR con sidebar, cards mejoradas, animaciones suaves
 
 ## API Access
 
@@ -157,9 +167,62 @@ Employee: empleado@demo.com / password123
 - Backend API: ✅ Running on port 3000
 - PostgreSQL: ✅ Running on port 5432 (Docker)
 - Frontend: ✅ Running on port 5173
-- Dashboard: ✅ Con estadísticas (horas hoy/semana/mes)
+- Dashboard: ✅ Con estadísticas (horas hoy/semana/mes), cards con iconos
 - Geolocalización: ✅ Captura GPS al fichar
 - Validación horarios: ✅ Entrada/salida validada contra schedule
 - Vacaciones: ✅ Módulo completo implementado
+- Companies: ✅ CRUD de empresas (admin)
+- Projects: ✅ CRUD de proyectos (admin)
+- UI/UX: ✅ Diseño consistente estilo Sesame HR
+- Landing Page: ✅ Profesional con pricing y testimonios
 - Database seeded with demo data
 - Tests: ✅ 27 tests passing (auth, clocking, vacations, schedules)
+
+## UI/UX Improvements
+
+### Components Created
+- `Button.tsx` - Botón reutilizable (variants: primary, secondary, danger, ghost, success)
+- `Input.tsx` - Input con label, error, hints
+- `Card.tsx` - Card con header y content
+- `Skeleton.tsx` - Estados de carga
+- `Toast.tsx` - Notificaciones
+
+### Design System
+- Tailwind config: Custom colors (success, warning, danger, info)
+- Border radius: xl (12px), 2xl (16px), 3xl (24px)
+- Shadows: soft, card, card-hover
+- Animations: fade-in, slide-up, scale-in, pulse-subtle
+- Components use `.card` class for consistent styling
+
+### Layout
+- Sidebar: Fixed, responsive, with user info and logout
+- Navigation: Active states with primary-50 background
+- Responsive: Collapses to hamburger menu on mobile
+
+## Tech Stack
+
+- **Backend**: NestJS 10.x, Prisma 5.x, PostgreSQL 15.x
+- **Frontend**: React 18.x, TypeScript 5.x, Vite 5.x, Tailwind CSS 3.x
+- **Testing**: Jest (backend), 27 tests passing
+
+## ESLint Configuration
+
+- Backend: `backend/.eslintrc.json`
+- Frontend: `frontend/.eslintrc.json`
+- Run `npm run lint` in each directory
+
+## Key Commands
+
+```bash
+# Backend
+cd backend
+npm run lint      # Run ESLint
+npm test         # Run tests
+npm run start:dev
+
+# Frontend
+cd frontend
+npx eslint src --ext ts,tsx  # Run ESLint
+npm run build                # Production build
+npm run dev                  # Dev server
+```

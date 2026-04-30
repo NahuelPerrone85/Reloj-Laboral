@@ -25,14 +25,17 @@ Sistema de control de horas laborales para empresas. Permite registrar entradas 
 ## Características
 
 - Registro de fichaje (entrada/salida)
-- Geolocalización de empleados
-- Gestión de empleados y empresas
+- Geolocalización de empleados (captura GPS al registrar)
+- Dashboard con estadísticas en tiempo real (horas hoy/semana/mes)
+- Validación de horarios (EARLY, ON_TIME, LATE, OUTSIDE)
+- Gestión de empleados y empresas (CRUD admin)
 - Tipos de horario (flexible, semiflexible, estricto)
-- Gestión de proyectos
-- Calendario de vacaciones y bajas
+- Gestión de proyectos con colores
+- Solicitud y aprobación de vacaciones/ausencias
 - Reportes en Excel y PDF
 - API RESTful documentación con Swagger
 - Autenticación JWT
+- Interfaz visual consistente (recuadros blancos con sombra)
 - Multi-dispositivo (Web, Responsive)
 
 ## Tecnologías
@@ -91,6 +94,78 @@ reloj-laboral/
 ├── frontend/                # React app
 │   ├── src/
 │   │   ├── components/   # Componentes compartidos
+│   │   │   ├── Sidebar.tsx       # Navigation sidebar
+│   │   │   ├── Layout.tsx        # Main layout
+│   │   │   └── ui/                # UI components
+│   │   │       ├── Button.tsx     # Reusable button
+│   │   │       ├── Input.tsx      # Form input
+│   │   │       ├── Card.tsx        # Card component
+│   │   │       ├── Skeleton.tsx    # Loading skeletons
+│   │   │       └── Toast.tsx       # Notifications
+│   │   ├── pages/       # Páginas
+│   │   ├── hooks/      # Custom hooks
+│   │   ├── services/    # API calls
+│   │   └── types/      # Tipos TypeScript
+│   └── package.json
+├── python/                 # Scripts reportes
+│   ├── requirements.txt
+│   └── reports/
+│       ├── excel_report.py
+│       └── pdf_report.py
+├── docker-compose.yml      # Orquestación
+├── .eslintrc.json
+├── prettierrc.json
+├── .editorconfig
+└── README.md
+```
+
+## UI/UX
+
+El proyecto cuenta con un sistema de diseño moderno estilo Sesame HR:
+
+### Componentes UI
+- **Button**: Variantes (primary, secondary, danger, ghost, success), tamaños (sm, md, lg)
+- **Input**: Labels, errores, hints, iconos
+- **Card**: Header con acciones, padding variable
+- **Skeleton**: Estados de carga
+- **Toast**: Notificaciones automáticas
+
+### Estilos Globales
+- Paleta de colores extendida (primary, success, warning, danger, info)
+- Border radius: xl (12px), 2xl (16px), 3xl (24px)
+- Sombras: soft, card, card-hover
+- Animaciones: fade-in, slide-up, scale-in, pulse-subtle
+
+### Layout
+- Sidebar fijo a la izquierda (240px)
+- Navegación responsive (hamburger en móvil)
+- Contenido con transición suave
+
+### Landing Page
+- Homepage profesional con pricing, features y testimonios
+- Diseño moderno y responsivo
+reloj-laboral/
+├── backend/                 # API NestJS
+│   ├── src/
+│   │   ├── auth/          # Módulo autenticación
+│   │   ├── users/         # Módulo usuarios
+│   │   ├── companies/     # Módulo empresas
+│   │   ├── clocking/      # Módulo fichajes
+│   │   ├── schedules:     # Módulo horarios
+│   │   ├── projects/      # Módulo proyectos
+│   │   ├── reports/      # Módulo reportes
+│   │   └── common/        # Utilidades comunes
+│   │       ├── decorators/
+│   │       ├── filters/
+│   │       ├── interceptors/
+│   │       ├── guards/
+│   │       └── pipes/
+│   ├── prisma/
+│   │   └── schema.prisma  # Esquema de base de datos
+│   └── package.json
+├── frontend/                # React app
+│   ├── src/
+│   │   ├── components/   # Componentes compartidos
 │   │   ├── pages/       # Páginas
 │   │   ├── hooks/      # Custom hooks
 │   │   ├── services/    # API calls
@@ -114,9 +189,33 @@ reloj-laboral/
 ### Requisitos Previos
 
 - Node.js 18.x
-- Docker y Docker Compose
+- Docker y Docker Compose (opcional)
 - PostgreSQL 15.x (o usar Docker)
 - Python 3.x (para reportes)
+- npm o yarn
+
+### Comandos de Desarrollo
+
+```bash
+# Instalar dependencias backend
+cd backend
+npm install
+npm run start:dev
+
+# Ejecutar tests (27 tests passing)
+npm test
+
+# Linting
+npm run lint
+
+# Instalar dependencias frontend
+cd ../frontend
+npm install
+npm run dev
+
+# Build producción
+npm run build
+```
 
 ### Instalación
 
@@ -172,7 +271,7 @@ npm run dev
 # Desarrollo completo con Docker
 docker-compose up -d
 
-# Backend单独
+# Backend
 docker-compose up -d backend
 
 # Base de datos
@@ -307,6 +406,13 @@ docker-compose up -d postgres
 3. Commit cambios (`git commit -m 'Add: nueva funcionalidad'`)
 4. Push al branch (`git push origin feature/nueva-funcionalidad`)
 5. Crear Pull Request
+
+## Credenciales de Demo
+
+```
+Admin:     admin@demo.com / password123
+Empleado:  empleado@demo.com / password123
+```
 
 ## Licencia
 

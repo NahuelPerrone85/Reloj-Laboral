@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateClockingDto } from './dto/create-clocking.dto';
-import { SchedulesService, ValidationResult } from '../schedules/schedules.service';
+import { SchedulesService } from '../schedules/schedules.service';
 
 export enum ClockingType {
   ENTRY = 'ENTRY',
@@ -12,7 +12,7 @@ export enum ClockingType {
 export class ClockingService {
   constructor(
     private prisma: PrismaService,
-    private schedulesService: SchedulesService,
+    private schedulesService: SchedulesService
   ) {}
 
   async findAll() {
@@ -52,7 +52,7 @@ export class ClockingService {
     const validation = await this.schedulesService.validateClockingTime(
       userId,
       'ENTRY',
-      new Date(),
+      new Date()
     );
 
     const clocking = await this.prisma.clocking.create({
@@ -72,11 +72,7 @@ export class ClockingService {
   }
 
   async recordExit(createClockingDto: CreateClockingDto, userId: string) {
-    const validation = await this.schedulesService.validateClockingTime(
-      userId,
-      'EXIT',
-      new Date(),
-    );
+    const validation = await this.schedulesService.validateClockingTime(userId, 'EXIT', new Date());
 
     const clocking = await this.prisma.clocking.create({
       data: {

@@ -38,10 +38,7 @@ describe('VacationsService', () => {
     };
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        VacationsService,
-        { provide: PrismaService, useValue: prismaService },
-      ],
+      providers: [VacationsService, { provide: PrismaService, useValue: prismaService }],
     }).compile();
 
     vacationsService = module.get<VacationsService>(VacationsService);
@@ -58,7 +55,7 @@ describe('VacationsService', () => {
           endDate: '2026-07-15',
           reason: 'Vacaciones de verano',
         },
-        'user-uuid',
+        'user-uuid'
       );
 
       expect(result).toHaveProperty('id');
@@ -82,7 +79,7 @@ describe('VacationsService', () => {
           startDate: '2026-07-01',
           endDate: '2026-07-05',
         },
-        'user-uuid',
+        'user-uuid'
       );
 
       expect(result.type).toBe('SICK_LEAVE');
@@ -137,7 +134,11 @@ describe('VacationsService', () => {
       const approved = { ...mockVacation, status: 'APPROVED', approvedBy: 'admin-uuid' };
       prismaService.vacation.update.mockResolvedValue(approved);
 
-      const result = await vacationsService.update('vacation-uuid', { status: 'APPROVED' }, 'admin-uuid');
+      const result = await vacationsService.update(
+        'vacation-uuid',
+        { status: 'APPROVED' },
+        'admin-uuid'
+      );
 
       expect(result.status).toBe('APPROVED');
       expect(prismaService.vacation.update).toHaveBeenCalledWith({
@@ -153,7 +154,11 @@ describe('VacationsService', () => {
       const rejected = { ...mockVacation, status: 'REJECTED' };
       prismaService.vacation.update.mockResolvedValue(rejected);
 
-      const result = await vacationsService.update('vacation-uuid', { status: 'REJECTED' }, 'admin-uuid');
+      const result = await vacationsService.update(
+        'vacation-uuid',
+        { status: 'REJECTED' },
+        'admin-uuid'
+      );
 
       expect(result.status).toBe('REJECTED');
     });
@@ -163,7 +168,7 @@ describe('VacationsService', () => {
     it('should delete a vacation request', async () => {
       prismaService.vacation.delete.mockResolvedValue(mockVacation);
 
-      const result = await vacationsService.remove('vacation-uuid');
+      await vacationsService.remove('vacation-uuid');
 
       expect(prismaService.vacation.delete).toHaveBeenCalledWith({
         where: { id: 'vacation-uuid' },

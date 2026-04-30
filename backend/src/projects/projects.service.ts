@@ -8,7 +8,16 @@ export class ProjectsService {
   constructor(private prisma: PrismaService) {}
 
   async create(createProjectDto: CreateProjectDto) {
-    return this.prisma.project.create({ data: createProjectDto });
+    if (!createProjectDto.companyId) {
+      throw new Error('Se requiere companyId para crear un proyecto');
+    }
+    const { companyId, ...rest } = createProjectDto;
+    return this.prisma.project.create({
+      data: {
+        ...rest,
+        companyId,
+      } as any,
+    });
   }
 
   async findAll() {

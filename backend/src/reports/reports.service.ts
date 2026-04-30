@@ -74,7 +74,13 @@ export class ReportsService {
       }
     }
 
-    return { startDate: start.toISOString(), endDate: end.toISOString(), clockings, dailySummary, totalHours };
+    return {
+      startDate: start.toISOString(),
+      endDate: end.toISOString(),
+      clockings,
+      dailySummary,
+      totalHours,
+    };
   }
 
   async getMonthlyReport(year: number, month: number, userId: string) {

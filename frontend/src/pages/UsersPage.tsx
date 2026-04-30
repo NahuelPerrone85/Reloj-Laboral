@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout } from '../components/Layout';
 import { useAuth } from '../hooks/useAuth';
 import api from '../services/api';
+import { Card } from '../components/ui';
 import type { User } from '../types';
 
 export const UsersPage = () => {
@@ -12,10 +12,8 @@ export const UsersPage = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (user?.role === 'ADMIN') {
-      loadUsers();
-    }
-  }, [user]);
+    loadUsers();
+  }, []);
 
   const loadUsers = async () => {
     try {
@@ -28,130 +26,107 @@ export const UsersPage = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-      return;
-    }
-
-    try {
-      await api.delete(`/users/${id}`);
-      setUsers(users.filter((u) => u.id !== id));
-    } catch (err) {
-      setError('Error al eliminar usuario');
-    }
-  };
-
   if (user?.role !== 'ADMIN') {
     return (
-      <Layout>
-        <div className="text-center py-12">
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
           <p className="text-gray-500">No tienes acceso a esta página</p>
-          <Link to="/dashboard" className="text-primary-600 hover:text-primary-500">
+          <Link to="/dashboard" className="text-primary-600 hover:text-primary-500 text-sm font-medium mt-2 inline-block">
             Volver al dashboard
           </Link>
         </div>
-      </Layout>
+      </div>
     );
   }
 
   return (
-    <Layout>
-      <div className="px-4 py-6 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="sm:flex sm:items-center">
-            <div className="sm:flex-auto">
-              <h1 className="text-2xl font-semibold text-gray-900">Empleados</h1>
-              <p className="mt-2 text-sm text-gray-700">
-                Gestiona los empleados de tu empresa
-              </p>
-            </div>
-          </div>
-
-          {error && (
-            <div className="mt-4 rounded-md bg-red-50 p-4">
-              <p className="text-sm text-red-600">{error}</p>
-            </div>
-          )}
-
-          <div className="mt-8 flex flex-col">
-            <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                <div className="overflow-hidden border border-gray-200 sm:rounded-lg">
-                  {isLoading ? (
-                    <div className="p-8 text-center text-gray-500">Cargando...</div>
-                  ) : users.length === 0 ? (
-                    <div className="p-8 text-center text-gray-500">
-                      No hay usuarios registrados
-                    </div>
-                  ) : (
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                          >
-                            Nombre
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Email
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Rol
-                          </th>
-                          <th
-                            scope="col"
-                            className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                          >
-                            <span className="sr-only">Acciones</span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200 bg-white">
-                        {users.map((u) => (
-                          <tr key={u.id}>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                              {u.name}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {u.email}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              <span
-                                className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                                  u.role === 'ADMIN'
-                                    ? 'bg-purple-100 text-purple-800'
-                                    : 'bg-gray-100 text-gray-800'
-                                }`}
-                              >
-                                {u.role === 'ADMIN' ? 'Admin' : 'Empleado'}
-                              </span>
-                            </td>
-                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                              <button
-                                onClick={() => handleDelete(u.id)}
-                                className="text-red-600 hover:text-red-900"
-                              >
-                                Eliminar
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Empleados</h1>
+          <p className="text-gray-500 mt-1">Gestiona los empleados de tu empresa</p>
+        </div>
+        <div className="text-sm text-gray-500">
+          {users.length} empleados
         </div>
       </div>
-    </Layout>
+
+      <Card>
+        {error && (
+          <div className="mx-6 mt-6 p-4 bg-danger-50 border border-danger-200 rounded-lg">
+            <p className="text-sm text-danger-600">{error}</p>
+          </div>
+        )}
+
+        {isLoading ? (
+          <div className="py-12 text-center">
+            <div className="w-8 h-8 border-3 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="text-gray-500 mt-3">Cargando...</p>
+          </div>
+        ) : users.length === 0 ? (
+          <div className="py-12 text-center">
+            <div className="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <p className="text-gray-500">No hay usuarios registrados</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto -mx-6">
+            <table className="min-w-full">
+              <thead>
+                <tr className="border-b border-gray-100">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nombre</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Rol</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Empresa</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {users.map((u) => (
+                  <tr key={u.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                          u.role === 'ADMIN' ? 'bg-purple-100' : 'bg-primary-100'
+                        }`}>
+                          <span className={`text-sm font-semibold ${
+                            u.role === 'ADMIN' ? 'text-purple-700' : 'text-primary-700'
+                          }`}>
+                            {u.name?.charAt(0).toUpperCase() || 'U'}
+                          </span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">{u.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {u.email}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        u.role === 'ADMIN'
+                          ? 'bg-purple-100 text-purple-700'
+                          : 'bg-gray-100 text-gray-700'
+                      }`}>
+                        {u.role === 'ADMIN' ? 'Admin' : 'Empleado'}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {u.companyId || '-'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Card>
+    </div>
   );
 };

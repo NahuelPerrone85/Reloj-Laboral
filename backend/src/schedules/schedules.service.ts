@@ -57,7 +57,7 @@ export class SchedulesService {
   async validateClockingTime(
     userId: string,
     clockingType: 'ENTRY' | 'EXIT',
-    timestamp: Date,
+    timestamp: Date
   ): Promise<ValidationResult> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
@@ -148,7 +148,6 @@ export class SchedulesService {
     }
 
     const earlyExitMinutes = endTimeMinutes - exitGraceMinutes;
-    const lateExitMinutes = endTimeMinutes + exitGraceMinutes;
 
     if (clockingTimeMinutes < earlyExitMinutes) {
       return {

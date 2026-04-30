@@ -24,7 +24,11 @@ export class ReportsController {
 
   @Get('monthly')
   @ApiOperation({ summary: 'Obtener reporte mensual' })
-  getMonthlyReport(@Query('year') year: number, @Query('month') month: number, @Query('userId') userId: string) {
+  getMonthlyReport(
+    @Query('year') year: number,
+    @Query('month') month: number,
+    @Query('userId') userId: string
+  ) {
     return this.reportsService.getMonthlyReport(year, month, userId);
   }
 }

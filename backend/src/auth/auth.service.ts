@@ -9,7 +9,7 @@ import { UsersService } from '../users/users.service';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -62,7 +62,8 @@ export class AuthService {
   }
 
   private sanitizeUser(user: any) {
-    const { password, ...result } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _password, ...result } = user;
     return result;
   }
 }

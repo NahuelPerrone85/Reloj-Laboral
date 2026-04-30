@@ -17,7 +17,8 @@ export class CreateProjectDto {
   @IsOptional()
   color?: string;
 
-  @ApiProperty({ example: 'uuid-de-empresa' })
+  @ApiProperty({ example: 'uuid-de-empresa', required: false })
   @IsString()
-  companyId: string;
+  @IsOptional()
+  companyId?: string;
 }

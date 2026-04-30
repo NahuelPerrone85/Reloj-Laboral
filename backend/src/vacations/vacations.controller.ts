@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { VacationsService } from './vacations.service';
 import { CreateVacationDto, UpdateVacationDto } from './dto/vacation.dto';
@@ -43,7 +53,11 @@ export class VacationsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar solicitud (aprobar/rechazar)' })
-  update(@Param('id') id: string, @Body() updateVacationDto: UpdateVacationDto, @Request() req: any) {
+  update(
+    @Param('id') id: string,
+    @Body() updateVacationDto: UpdateVacationDto,
+    @Request() req: any
+  ) {
     return this.vacationsService.update(id, updateVacationDto, req.user.id);
   }
 

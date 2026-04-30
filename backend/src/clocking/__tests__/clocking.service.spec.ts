@@ -106,7 +106,7 @@ describe('ClockingService', () => {
       expect(schedulesService.validateClockingTime).toHaveBeenCalledWith(
         'user-uuid',
         'ENTRY',
-        expect.any(Date),
+        expect.any(Date)
       );
     });
 
@@ -116,7 +116,7 @@ describe('ClockingService', () => {
 
       const result = await clockingService.recordEntry(
         { latitude: 40.7128, longitude: -74.006 },
-        'user-uuid',
+        'user-uuid'
       );
 
       expect(result.latitude).toBe(40.7128);
@@ -136,7 +136,7 @@ describe('ClockingService', () => {
       expect(schedulesService.validateClockingTime).toHaveBeenCalledWith(
         'user-uuid',
         'EXIT',
-        expect.any(Date),
+        expect.any(Date)
       );
     });
   });

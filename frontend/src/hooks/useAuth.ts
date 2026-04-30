@@ -43,8 +43,9 @@ export const useAuth = (): UseAuthReturn => {
     try {
       const response = await authService.login(email, password);
       setUser(response.user);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Error al iniciar sesión');
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || 'Error al iniciar sesión');
       throw err;
     } finally {
       setIsLoading(false);
