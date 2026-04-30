@@ -121,7 +121,7 @@ reloj-laboral/
 
 ## UI/UX
 
-El proyecto cuenta con un sistema de diseño moderno estilo Sesame HR:
+El proyecto cuenta con un sistema de diseño moderno y profesional:
 
 ### Componentes UI
 - **Button**: Variantes (primary, secondary, danger, ghost, success), tamaños (sm, md, lg)

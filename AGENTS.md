@@ -118,7 +118,7 @@ docker-compose up -d
 - **Validación de Horarios**: Compara fichajes vs horarios de la empresa (EARLY, ON_TIME, LATE, OUTSIDE)
 - **Vacaciones**: Solicitudes de permiso (vacaciones, baja médica, asunto personal), aprobación por administrador
 - **Landing Page**: Página principal profesional con pricing, features y testimonios
-- **UI/UX Moderno**: Diseño estilo Sesame HR con sidebar, cards mejoradas, animaciones suaves
+- **UI/UX Moderno**: Diseño moderno con sidebar, cards mejoradas, animaciones suaves
 
 ## API Access
 
@@ -173,7 +173,7 @@ Employee: empleado@demo.com / password123
 - Vacaciones: ✅ Módulo completo implementado
 - Companies: ✅ CRUD de empresas (admin)
 - Projects: ✅ CRUD de proyectos (admin)
-- UI/UX: ✅ Diseño consistente estilo Sesame HR
+- UI/UX: ✅ Diseño consistente y profesional
 - Landing Page: ✅ Profesional con pricing y testimonios
 - Database seeded with demo data
 - Tests: ✅ 27 tests passing (auth, clocking, vacations, schedules)
